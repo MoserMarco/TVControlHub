@@ -1,3 +1,3 @@
 # TVControlHub
 
-tcnologies
+adding some info
