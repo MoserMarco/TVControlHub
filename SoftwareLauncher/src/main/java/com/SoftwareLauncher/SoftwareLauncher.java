@@ -40,9 +40,10 @@ public class SoftwareLauncher {
                 PowerOff();
                 break;
             default:
-                System.out.println("Programma non riconosciuto: " + programId);
+                System.out.println("Program not recognized" + programId);
         }
     }
+
     private void Kodi() {
         System.out.println("Kodi: " + programId);
         executeCommandWhitSonProces("flatpak", "run" ,"tv.kodi.Kodi" );
@@ -94,23 +95,20 @@ public class SoftwareLauncher {
 
     private void executeCommandAndKillFather(String... command) {
         try {
-            // Comando da eseguire (es. un'applicazione Flatpak o qualsiasi comando Ubuntu)
-            // Avvia il processo figlio (in background, indipendente dal padre)
 
             ProcessBuilder builder = new ProcessBuilder(command);
             builder.start();
 
-            // Termina il processo padre
+
             System.exit(0);
 
         } catch (Exception e) {
 
         }
     }
+
     private void executeCommandWhitSonProces(String... command ) {
         try {
-            // Comando da eseguire (es. un'applicazione Flatpak o qualsiasi comando Ubuntu)
-            // Avvia il processo figlio (in background, indipendente dal padre)
 
             ProcessBuilder builder = new ProcessBuilder(command);
 

@@ -19,7 +19,6 @@ public class UiLauncher extends Application {
 
     @Override
     public void start(Stage stage) {
-        System.out.println("Applicazione avviata");
 
         WebView webView = new WebView();
         WebEngine webEngine = webView.getEngine();
@@ -33,7 +32,7 @@ public class UiLauncher extends Application {
         stage.initStyle(javafx.stage.StageStyle.UNDECORATED);
         stage.show();
 
-        // Gestione tastiera a livello di scena
+
         scene.setOnKeyPressed(event -> {
             KeyCode code = event.getCode();
             switch (code) {
@@ -50,36 +49,34 @@ public class UiLauncher extends Application {
                     selectedIndex = (selectedIndex + rowSize) % totalTiles;
                     break;
                 case ENTER:
-                    System.out.println("Esegui azione per " + selectedIndex);
-                    handleClick(selectedIndex);
+                   handleClick(selectedIndex);
                     return;
                 default:
                     return;
             }
-            // Aggiorna la selezione nel frontend
+            // Update tile selected in frontend
             webEngine.executeScript("selectTile(" + selectedIndex + ");");
         });
 
-        // Quando il WebView è caricato, imposta il focus sulla scena
+        // when WebView is loaded, it move focus on the scene
         webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
                 Platform.runLater(() -> {
-                    // Calcola il punto centrale dello schermo
+
                     double centerX = stage.getX() + stage.getWidth() / 2;
                     double centerY = stage.getY() + stage.getHeight() / 2;
 
-                    // Simula clic con Robot
+                    // Simulated click
                     Robot robot = new Robot();
                     robot.mouseMove(centerX, centerY);
                     robot.mouseClick(javafx.scene.input.MouseButton.PRIMARY);
-                    System.out.println("Clic simulato per attivare il focus.");
+
                 });
             }
         });
 
-        // Alla chiusura
+        // Close request
         stage.setOnCloseRequest((WindowEvent t) -> {
-            System.out.println("Chiudo l'app... fermo Spark.");
             MainServer.stop();
             Platform.exit();
             System.exit(0);

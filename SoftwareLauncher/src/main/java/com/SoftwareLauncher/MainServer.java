@@ -6,25 +6,18 @@ import static spark.Spark.*;
 
 public class MainServer {
     public static void start() {
-        System.out.println("Avvio server Spark...");
+        ipAddress("127.0.0.1");
         port(8080);
-        staticFiles.location("/public");  // assicurati di avere src/main/resources/public
-
-        get("/start/:app", (req, res) -> {
-            String app = req.params(":app");
-            try {
-                Runtime.getRuntime().exec(app);
-                return "Avviato: " + app;
-            } catch (Exception e) {
-                res.status(500);
-                return "Errore: " + e.getMessage();
-            }
+        staticFiles.location("/public");
+        get("/", (req, res) -> {
+            res.redirect("/home.html");
+            return null;
         });
 
 
     }
     public static void stop() {
 
-        spark.Spark.stop(); // <- IMPORTANTE
+        spark.Spark.stop();
     }
 }
