@@ -1,3 +1,5 @@
+import socket
+
 from flask import Flask, render_template, jsonify
 from wakeonlan import send_magic_packet
 
@@ -5,7 +7,8 @@ app = Flask(__name__)
 
 # Configurazione PC da accendere (dummy dati per ora)
 PC_MAC = "60:45:bd:fb:cf:8b"
-IP_SERVER = "192.168.1.101"
+PC_IP= "192.168.1.101"
+PC_PORT = 5000
 @app.route("/")
 def index():
     return render_template("remote.html")
@@ -18,11 +21,14 @@ def wake_pc():
     except Exception as e:
             return jsonify({"status": "error", "message": str(e)}), 500
 
+def send_key_to_pc(command):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.sendto(command.encode(), (PC_IP, PC_PORT))
 @app.route("/key/<name>", methods=["POST"])
 def press_key(name):
     allowed_keys = ["up", "down", "left", "right", "enter", "back", "home"]
     if name in allowed_keys:
-        # Qui per ora simuliamo il comando
+        send_key_to_pc(name)
         return jsonify({"status": "ok", "message": f"Tasto {name} inviato"})
     else:
         return jsonify({"status": "error", "message": "Tasto non valido"})
