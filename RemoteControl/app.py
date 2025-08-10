@@ -5,16 +5,18 @@ app = Flask(__name__)
 
 # Configurazione PC da accendere (dummy dati per ora)
 PC_MAC = "60:45:bd:fb:cf:8b"
-IP_SERVER = "192.168.1.4"
+IP_SERVER = "192.168.1.101"
 @app.route("/")
 def index():
     return render_template("remote.html")
 
 @app.route("/wake", methods=["POST"])
 def wake_pc():
-    # Solo messaggio di debug per ora, niente WOL reale
-    # Quando pronto: send_magic_packet(PC_MAC)
-    return jsonify({"status": "ok", "message": "Wake-on-LAN inviato!"})
+    try:
+        send_magic_packet(PC_MAC)
+        return jsonify({"status": "ok", "message": "Wake-on-LAN inviato!"})
+    except Exception as e:
+            return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route("/key/<name>", methods=["POST"])
 def press_key(name):
@@ -26,4 +28,4 @@ def press_key(name):
         return jsonify({"status": "error", "message": "Tasto non valido"})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=False)
