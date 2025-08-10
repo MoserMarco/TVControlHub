@@ -50,7 +50,13 @@ public class SoftwareLauncher {
     }
 
     private void DVDPlayer() {
+
         System.out.println("DVDPlayer: " + programId);
+
+        String scriptPathDvd = "scriptBash/dvd_Kodi.sh";
+        executeCommandWhitSonProces("/bin/bash", scriptPathDvd);
+
+
     }
 
     private void Bluetooth() {
@@ -89,7 +95,11 @@ public class SoftwareLauncher {
     private void PowerOff() {
         System.out.println("PowerOff: " + programId);
 
-        executeCommandAndKillFather("systemctl" , "suspend");
+        String scriptPathCloseWindows = "scriptBash/closeWindows.sh";
+        String scriptPathSuspend = "scriptBash/suspend.sh";
+        executeCommandWhitSonProces("/bin/bash", scriptPathCloseWindows);
+        executeCommandWhitSonProces("/bin/bash", scriptPathSuspend);
+
 
     }
 
@@ -112,11 +122,11 @@ public class SoftwareLauncher {
 
             ProcessBuilder builder = new ProcessBuilder(command);
 
-            builder.start();
-
+            Process process = builder.start();
+            process.waitFor();
 
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 }
