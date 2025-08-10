@@ -1,2 +1,9 @@
 #!/bin/bash
-systemctl suspend
+
+
+
+
+sleep 10
+
+
+systemctl suspend 

@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # Configurazione PC da accendere (dummy dati per ora)
 PC_MAC = "60:45:bd:fb:cf:8b"
-PC_IP= "192.168.1.101"
+PC_IP= "192.168.1.128"
 PC_PORT = 5000
 @app.route("/")
 def index():
@@ -34,4 +34,4 @@ def press_key(name):
         return jsonify({"status": "error", "message": "Tasto non valido"})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=False)
+    app.run(host="0.0.0.0", port=6969, debug=False)

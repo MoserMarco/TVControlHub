@@ -95,27 +95,18 @@ public class SoftwareLauncher {
     private void PowerOff() {
         System.out.println("PowerOff: " + programId);
 
-        String scriptPathCloseWindows = "scriptBash/closeWindows.sh";
-        String scriptPathSuspend = "scriptBash/suspend.sh";
-        executeCommandWhitSonProces("/bin/bash", scriptPathCloseWindows);
-        executeCommandWhitSonProces("/bin/bash", scriptPathSuspend);
 
+        String scriptPathKillProcess = "scriptBash/kill_processes.sh";
+
+        executeCommandWhitSonProcesNoWait("/bin/bash", scriptPathKillProcess, "&");
+
+        String scriptPathPowerOff = "scriptBash/suspend.sh";
+
+        executeCommandWhitSonProces("/bin/bash", scriptPathPowerOff);
 
     }
 
-    private void executeCommandAndKillFather(String... command) {
-        try {
 
-            ProcessBuilder builder = new ProcessBuilder(command);
-            builder.start();
-
-
-            System.exit(0);
-
-        } catch (Exception e) {
-
-        }
-    }
 
     private void executeCommandWhitSonProces(String... command ) {
         try {
@@ -129,4 +120,19 @@ public class SoftwareLauncher {
             e.printStackTrace();
         }
     }
+
+    private void executeCommandWhitSonProcesNoWait(String... command ) {
+        try {
+
+            ProcessBuilder builder = new ProcessBuilder(command);
+
+            Process process = builder.start();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    
 }

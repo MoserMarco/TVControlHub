@@ -2,7 +2,7 @@
 
 
 DVD_DEVICE="/dev/sr0"
-TIMEOUT=120  # Timeout in seconds
+TIMEOUT=5  # Timeout in seconds
 
 
 eject "$DVD_DEVICE"
