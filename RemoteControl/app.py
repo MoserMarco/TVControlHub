@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # Configurazione PC da accendere (dummy dati per ora)
 PC_MAC = "60:45:bd:fb:cf:8b"
-PC_IP= "192.168.1.128"
+PC_IP= "192.168.1.110"
 PC_PORT = 5000
 @app.route("/")
 def index():
