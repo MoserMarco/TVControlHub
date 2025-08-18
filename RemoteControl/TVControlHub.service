@@ -4,9 +4,9 @@ After=network.target
 
 [Service]
 User=pi
-WorkingDirectory=/home/pi/TVControlHub/RemoteControl
-Environment="PATH=/home/pi/TVControlHub/RemoteControl/venv/bin"
-ExecStart=/home/pi/TVControlHub/RemoteControl/venv/bin/python /hom>
+WorkingDirectory=/srv/TVControlHub/RemoteControl
+Environment="PATH=/srv/TVControlHub/RemoteControl/venv/bin"
+ExecStart=/srv/TVControlHub/RemoteControl/venv/bin/python /srv/TVControlHub/RemoteControl/app.py>
 Restart=always
 
 [Install]
