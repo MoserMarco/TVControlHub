@@ -6,7 +6,7 @@ After=network.target
 User=pi
 WorkingDirectory=/srv/TVControlHub/RemoteControl
 Environment="PATH=/srv/TVControlHub/RemoteControl/venv/bin"
-ExecStart=/srv/TVControlHub/RemoteControl/venv/bin/python /srv/TVControlHub/RemoteControl/app.py>
+ExecStart=/srv/TVControlHub/RemoteControl/venv/bin/python /srv/TVControlHub/RemoteControl/app.py
 Restart=always
 
 [Install]
