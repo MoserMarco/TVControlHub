@@ -1,0 +1,14 @@
+[Unit]
+Description=TVControlHub
+After=network.target
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/TVControlHub/RemoteControl
+Environment="PATH=/home/pi/TVControlHub/RemoteControl/venv/bin"
+ExecStart=/home/pi/TVControlHub/RemoteControl/venv/bin/python /hom>
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
