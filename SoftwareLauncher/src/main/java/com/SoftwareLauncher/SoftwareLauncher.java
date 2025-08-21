@@ -54,7 +54,7 @@ public class SoftwareLauncher {
         System.out.println("DVDPlayer: " + programId);
 
         String scriptPathDvd = "scriptBash/dvd_Kodi.sh";
-        executeCommandWhitSonProces("/bin/bash", scriptPathDvd);
+        executeCommandWhitSonProcesNoWait("/bin/bash", scriptPathDvd, "&");
 
 
     }
@@ -100,9 +100,7 @@ public class SoftwareLauncher {
 
         executeCommandWhitSonProcesNoWait("/bin/bash", scriptPathKillProcess, "&");
 
-        String scriptPathPowerOff = "scriptBash/suspend.sh";
 
-        executeCommandWhitSonProces("/bin/bash", scriptPathPowerOff);
 
     }
 

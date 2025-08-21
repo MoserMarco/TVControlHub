@@ -11,7 +11,7 @@ EXCLUDE=(
     "dconf-service" "mutter-x11-fram" "gnome-text-edit" "gnome-keyring-d" "ibus-"
     "gnome-remote-de" "gvfs" "tracker" "update-notifier" "gnome-terminal-" "bash"
     "gjs" "xdg-document-po" "xdg-permission-" "gsd-power" "gsd-screensaver" "gsd-print-notif"
-    "suspend.sh" # <-- escludo il processo suspend.sh!
+    "kill_processes.sh"
 )
 
 
@@ -31,5 +31,6 @@ ps -eo pid,user,comm --sort=user | grep -v root | while read pid user comm; do
         kill $pid
     fi
 done
+systemctl suspend
 
 

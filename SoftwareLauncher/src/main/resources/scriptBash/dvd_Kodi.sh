@@ -1,29 +1,28 @@
 #!/bin/bash
 
+DVDREADER="/dev/sr0"
+TIMEOUT=300
+TIMECHECK=2
+CHECKTIMES=$(( TIMEOUT / TIMECHECK ))
 
-DVD_DEVICE="/dev/sr0"
-TIMEOUT=5  # Timeout in seconds
+eject $DVDREADER
 
+for i in $(seq 1 $CHECKTIMES)
+do
+    char=$(blkid /dev/sr0 | wc -m)
 
-eject "$DVD_DEVICE"
-
-
-#wait until dvd player is opend
-while ! [ -b "$DVD_DEVICE" ]; do
-    sleep 0.5
-done
-
-start_time=$(date +%s)
-
-while ! blkid "$DVD_DEVICE" &>/dev/null; do
-    sleep 1
-    current_time=$(date +%s)
-    elapsed=$((current_time - start_time))
-    if (( elapsed >= TIMEOUT )); then
-        
-        exit 1
+    
+    if [[ "$char" != "0" ]]; then
+	flatpak run tv.kodi.Kodi dvd://	
+	eject $DVDREADER
+	
+	exit 1
     fi
+   
+
+    sleep $TIMECHECK
 done
 
-flatpak run tv.kodi.Kodi dvd://
+exit 1
+
 
