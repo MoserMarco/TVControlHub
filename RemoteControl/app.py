@@ -1,6 +1,6 @@
 import socket
 
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from wakeonlan import send_magic_packet
 
 app = Flask(__name__)
@@ -29,12 +29,24 @@ def send_key_to_pc(command):
     sock.sendto(command.encode(), (PC_IP, PC_PORT))
 @app.route("/key/<name>", methods=["POST"])
 def press_key(name):
-    allowed_keys = ["up", "down", "left", "right", "enter", "back", "home", "esc", "space"]
+    allowed_keys = ["up", "down", "left", "right", "enter", "back", "home", "esc", "space","mouseLeft", "mouseRight"]
     if name in allowed_keys:
         send_key_to_pc(name)
         return jsonify({"status": "ok", "message": f"Button {name} sent"})
     else:
         return jsonify({"status": "error", "message": "Button non valido"})
+
+@app.route("/mouse_move", methods=["POST"])
+def mouse_move():
+    data = request.get_json()
+    dx = data.get("dx", 0)
+    dy = data.get("dy", 0)
+
+    print(dx, dy)
+    return jsonify(success=True)
+
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=6969, debug=False)

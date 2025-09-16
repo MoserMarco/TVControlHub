@@ -17,19 +17,18 @@
         </div>
 
 
-        <div id="MousePannel">
-
-
+        <div class="joystick" id="joystick">
+            <div class="stick" id="stick"></div>
         </div>
 
 
         <div class="lastRow">
                 <div class="imgButton">
-                    <img src="{{ url_for('static', filename='Images/MouseButton.png') }}" onclick="sendKey('left')">
+                    <img src="{{ url_for('static', filename='Images/MouseLeft.png') }}" onclick="sendKey('mouseLeft')">
 
                 </div>
                 <div class="imgButton">
-                    <img src="{{ url_for('static', filename='Images/MouseButton.png') }}" onclick="sendKey('right')">
+                    <img src="{{ url_for('static', filename='Images/MouseRight.png') }}" onclick="sendKey('mouseRight')">
                 </div>
         </div>
     </div>

@@ -1,5 +1,5 @@
 body {
-    padding-top: 10vh;
+    padding-top: 4vh;
     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
@@ -8,7 +8,7 @@ body {
     text-align: center;
     background-color: #2b2b2b; /* grigio scuro */
     color: #f0f0f0;
-    height: 100vh;             /* altezza viewport */
+    height: 80vh;             /* altezza viewport */
 
     margin: 0;                 /* elimina margini default */
 
@@ -21,7 +21,7 @@ body {
     justify-content: initial;   /* verticale */
     text-align: center;
     height: 100%;
-    gap: 30px;
+
 }
 h1 {
     margin-top: 20px;
@@ -148,4 +148,31 @@ img{
     align-items: center;
     justify-content: center;
     box-shadow: 0px 0px 10px red;
+}
+.joystick {
+      width: 70vw;
+      height: 70vw;
+      background-color: #333530;
+      border-radius: 50%;
+      position: relative;
+      touch-action: none;
+      box-shadow: 0px 0px 10px red;
+      margin-bottom: 60px;
+      margin-top: 60px;
+}
+
+.stick {
+      width: 16.5vw;
+      height: 16.5vw;
+      background: black;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: 0.1s;
+}
+
+#brBeetwenButtons{
+    height: 40px
 }

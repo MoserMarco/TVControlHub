@@ -24,6 +24,10 @@ KEY_MAP = {
     "left": e.KEY_LEFT,
     "right": e.KEY_RIGHT,
     "enter": e.KEY_ENTER,
+    "esc": e.KEY_ESC,
+    "space": e.KEY_SPACE,
+    "mouseRight": e.BTN_RIGHT,
+    "mouseLeft": e.BTN_LEFT,
 }
 
 def press_key(command):
