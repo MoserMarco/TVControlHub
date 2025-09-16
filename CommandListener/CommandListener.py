@@ -1,41 +1,53 @@
 import socket
-from pynput.keyboard import Controller, Key
+import subprocess
+from evdev import UInput, ecodes as e
 
-keyboard = Controller()
+# Define real keyboard
+capabilities = {
+    e.EV_KEY: list(range(e.KEY_ESC, e.KEY_MAX))
+}
+
+
+ui = UInput(capabilities,
+            name="AT Translated Set 2 keyboard",
+            bustype=0x11,
+            vendor=0x1,
+            product=0x1,
+            version=1)
 
 UDP_IP = "0.0.0.0"
 UDP_PORT = 5000
 
-# Mappa comandi API → funzione che preme tasti
-def press_key(command):
-    if command == "up":
-        keyboard.press(Key.up)
-        keyboard.release(Key.up)
-    elif command == "down":
-        keyboard.press(Key.down)
-        keyboard.release(Key.down)
-    elif command == "left":
-        keyboard.press(Key.left)
-        keyboard.release(Key.left)
-    elif command == "right":
-        keyboard.press(Key.right)
-        keyboard.release(Key.right)
-    elif command == "enter":
-        keyboard.press(Key.enter)
-        keyboard.release(Key.enter)
-    elif command == "back":  # Alt + F4
-        keyboard.press(Key.alt_l)
-        keyboard.press(Key.f4)
-        keyboard.release(Key.f4)
-        keyboard.release(Key.alt_l)
+KEY_MAP = {
+    "up": e.KEY_UP,
+    "down": e.KEY_DOWN,
+    "left": e.KEY_LEFT,
+    "right": e.KEY_RIGHT,
+    "enter": e.KEY_ENTER,
+}
 
+def press_key(command):
+    if command in KEY_MAP:
+        key = KEY_MAP[command]
+        ui.write(e.EV_KEY, key, 1) 
+        ui.write(e.EV_KEY, key, 0) 
+        ui.syn()
+    elif command == "back":  # Alt+F4
+        ui.write(e.EV_KEY, e.KEY_LEFTALT, 1)
+        ui.write(e.EV_KEY, e.KEY_F4, 1)
+        ui.write(e.EV_KEY, e.KEY_F4, 0)
+        ui.write(e.EV_KEY, e.KEY_LEFTALT, 0)
+        ui.syn()
+    elif command == "home":
+        subprocess.run(["/home/user/SoftwareLauncher/SoftwareLauncher/runSoftwareLauncherScript.sh", "/home/user/SoftwareLauncher/SoftwareLauncher/"], capture_output=True, text=True)
+        
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((UDP_IP, UDP_PORT))
 
-print(f"In ascolto su porta {UDP_PORT}...")
+print(f"Listening port {UDP_PORT}...")
 
 while True:
     data, addr = sock.recvfrom(1024)
     command = data.decode().strip()
     press_key(command)
-    print(f"Tasto {command} premuto")
+    print(f"Button {command} pressed")

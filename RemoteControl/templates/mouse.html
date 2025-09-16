@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mouse</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div id="everyThing">
+        <div class="lastRow">
+            <div class="imgButton">
+                <img src="{{ url_for('static', filename='Images/Esc.png') }}" onclick="remote()">
+
+            </div>
+
+        </div>
+
+
+        <div id="MousePannel">
+
+
+        </div>
+
+
+        <div class="lastRow">
+                <div class="imgButton">
+                    <img src="{{ url_for('static', filename='Images/MouseButton.png') }}" onclick="sendKey('left')">
+
+                </div>
+                <div class="imgButton">
+                    <img src="{{ url_for('static', filename='Images/MouseButton.png') }}" onclick="sendKey('right')">
+                </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>

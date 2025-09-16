@@ -9,11 +9,15 @@
 <body>
 
     <div id="everyThing">
-        <div class="imgButton">
-        <img id="PowerOff" src="{{ url_for('static', filename='Images/PowerOff.png') }}" onclick="sendWake()">
+        <div class="lastRow">
+            <div class="imgButton">
+                <img src="{{ url_for('static', filename='Images/PowerOff.png') }}" onclick="sendWake()">
 
-
-    </div>
+            </div>
+            <div class="imgButton">
+                <img src="{{ url_for('static', filename='Images/Mouse.png') }}" onclick="mouse()">
+            </div>
+        </div>
 
     <div class="remote-pad">
         <!-- up arrow -->
@@ -43,13 +47,22 @@
     </div>
     <div class="lastRow">
         <div class="imgButton">
-            <img src="{{ url_for('static', filename='Images/Home.png') }}" onclick="sendKey('home')">
+            <img src="{{ url_for('static', filename='Images/Space.png') }}" onclick="sendKey('space')">
 
         </div>
         <div class="imgButton">
-            <img src="{{ url_for('static', filename='Images/Back.png') }}" onclick="sendKey('back')">
+            <img src="{{ url_for('static', filename='Images/Esc.png') }}" onclick="sendKey('esc')">
         </div>
     </div>
+        <div class="lastRow">
+            <div class="imgButton">
+                <img src="{{ url_for('static', filename='Images/Home.png') }}" onclick="sendKey('home')">
+
+            </div>
+            <div class="imgButton">
+                <img src="{{ url_for('static', filename='Images/Back.png') }}" onclick="sendKey('back')">
+            </div>
+        </div>
     </div>
 
 

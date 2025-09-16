@@ -9,3 +9,10 @@ function sendKey(key) {
         .then(r => r.json())
 
 }
+
+function mouse(){
+    window.location.href = "/mouse";
+}
+function remote(){
+    window.location.href = "/";
+}
