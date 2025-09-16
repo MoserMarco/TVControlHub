@@ -42,7 +42,10 @@ def mouse_move():
     dx = data.get("dx", 0)
     dy = data.get("dy", 0)
 
-    print(dx, dy)
+
+    command = f"MOUSE:{dx},{dy}"
+    print(command)
+    send_key_to_pc(command)
     return jsonify(success=True)
 
 

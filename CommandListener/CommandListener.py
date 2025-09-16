@@ -11,7 +11,7 @@ keyboard = UInput(
         e.EV_KEY: list(range(e.KEY_ESC, e.KEY_MAX)),
     },
     name="Virtual Keyboard",
-    bustype=0x03,   # BUS_USB (0x03)
+    bustype=0x03,   
     vendor=0x1234,
     product=0x5678,
     version=1,
@@ -20,12 +20,12 @@ keyboard = UInput(
 
 mouse = UInput(
     {
-        # bottoni mouse
+        
         e.EV_KEY: [
             e.BTN_LEFT, e.BTN_RIGHT, e.BTN_MIDDLE,
             e.BTN_SIDE, e.BTN_EXTRA, e.BTN_FORWARD, e.BTN_BACK
         ],
-        # assi relativi (pointer)
+        
         e.EV_REL: [e.REL_X, e.REL_Y, e.REL_WHEEL],
     },
     name="Virtual Mouse",
@@ -48,8 +48,8 @@ def find_device_by_name(name):
 
 kbd_path, kbd_dev = find_device_by_name("Virtual Keyboard")
 mouse_path, mouse_dev = find_device_by_name("Virtual Mouse")
-print("Virtual keyboard device:", kbd_path or "(non trovato)")
-print("Virtual mouse device   :", mouse_path or "(non trovato)")
+print("Virtual keyboard device:", kbd_path or "(not found)")
+print("Virtual mouse device   :", mouse_path or "(not found)")
 
 # --- Config rete ---
 UDP_IP = "0.0.0.0"
@@ -104,7 +104,11 @@ def press_key(command):
         return True
 
     return False
-
+def move_mouse(dx, dy):
+    
+    mouse.write(e.EV_REL, e.REL_X, dx)
+    mouse.write(e.EV_REL, e.REL_Y, dy)
+    mouse.syn()
 # --- Loop UDP ---
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((UDP_IP, UDP_PORT))
@@ -113,6 +117,21 @@ print(f"Listening port {UDP_PORT}... (run as root if necessary)")
 while True:
     data, addr = sock.recvfrom(1024)
     command = data.decode().strip()
-    ok = press_key(command)
-    print(f"Button {command} pressed -> {'OK' if ok else 'UNKNOWN'}")
+    
+    if command.startswith("MOUSE:"):
+        try:
+            dx_str, dy_str = command.split(":")[1].split(",")
+            dx, dy = int(dx_str), int(dy_str)
+
+            
+            
+            scale = 0.5
+            move_mouse(int(dx * scale),int( dy * scale))
+            print(f"Mouse moved dx={dx}, dy={dy} (scaled {dx*scale}, {dy*scale})")
+        except Exception as e:
+            print("Error parsing MOUSE command:", e)
+
+    else:
+        ok = press_key(command)
+        print(f"Button {command} pressed -> {'OK' if ok else 'UNKNOWN'}")
 
